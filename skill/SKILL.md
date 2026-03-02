@@ -91,7 +91,7 @@ Output a structured report:
 ### Summary
 - X/6 aligned, Y/6 drifted, Z/6 broken
 - [top priority fixes, if any]
-- [skills to deposit or update, if any]
+- [skill deposit candidates with recommendation: deposit / don't deposit / revisit when]
 ```
 
 ## Rules
@@ -101,6 +101,6 @@ Output a structured report:
 - **Skip gracefully** — if a pillar has no anchors, skip its dimensions with a note.
 - **Be specific** — cite file paths and line numbers, not vague descriptions.
 - **No false positives** — only flag real drift, not stylistic differences.
-- **Skill deposits matter** — always check if there are lessons to capture as skills.
+- **Skill deposits need criteria** — always check for lessons to capture, but evaluate each candidate against the deposit criteria in `references/dimensions.md` (Dimension 3). Not every solved problem is worth a skill file.
 - **Platform-agnostic** — works for code, content, video, research, anything.
 - **Language-agnostic** — no assumption about programming language or human language.

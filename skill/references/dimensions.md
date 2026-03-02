@@ -45,6 +45,30 @@ Any lessons to capture? Existing skills need updating?
 | Skill coverage gaps | Are there active areas with no corresponding skill? | Doing complex work repeatedly with no documented method |
 | Deposit backlog | List skills that should exist but don't yet | Pattern used 3+ times but never formalized |
 
+#### Skill Deposit Criteria
+
+When this dimension flags potential skill deposits, evaluate each candidate against these criteria. A pattern is worth depositing when it meets **at least one** of:
+
+1. **Cross-project reusable** — The pattern applies across 3+ different projects. Deposit as a global skill.
+2. **User-facing in a skills project** — The project itself IS a skills/tools project. Patterns that capture user intent, trigger timing, or solve user-facing interaction problems are worth depositing because users will hit these same issues.
+3. **Intra-project SOP** — Even within a single project, if the pattern forms a repeatable workflow (editing technique, debugging SOP, review checklist) that you'll use again and again, it's worth depositing.
+
+**NOT worth depositing:**
+
+- **Code is the documentation** — If the pattern is already well-expressed in code + inline comments, extracting it adds maintenance burden with no value. Code IS the best documentation for implementation patterns.
+- **Pure annotations** — Comments-level insights don't need separate files.
+- **Wrong granularity** — Too fine (no application scenario, e.g. "always use setTimeout not setInterval for one-shot delays") or too coarse (covers everything, e.g. "write good code"). Right granularity: someone encountering the same class of problem would benefit from reading this before starting.
+- **No counter-intuitive trap** — If the "obvious" approach works fine, there's nothing to deposit. Skills capture the non-obvious.
+
+#### How to Report Skill Deposit Candidates
+
+For each candidate pattern flagged by this dimension:
+
+1. State the pattern briefly
+2. Evaluate against the criteria above — which conditions does it meet?
+3. Give a clear recommendation: **deposit** / **don't deposit** / **revisit when [condition]**
+4. If "don't deposit": explain why (usually "code is the doc" or "not reusable enough")
+
 ---
 
 ## Deep Dimensions
