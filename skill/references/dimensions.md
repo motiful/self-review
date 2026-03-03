@@ -110,3 +110,16 @@ Does the output follow established methods?
 | Behavioral rules | Check if skill rules are actually enforced | Rule says "never do X", but artifact does X |
 | Quality gates | Verify documented quality checks were actually applied | Checklist exists but wasn't followed |
 | Artifact-as-skill check | If artifact IS a skill, does it follow skill conventions? | Built a SKILL.md that doesn't match the skill template |
+
+### 7. Documentation Completeness
+
+Are all significant changes properly documented?
+
+| What to check | How | Common drifts |
+|---|---|---|
+| Changelog coverage | New features/breaking changes have design docs or changelog entries | Feature shipped, no documentation of why or how |
+| Progress accuracy | Progress file reflects actual state of work | Code merged, progress still says "in progress" |
+| Cross-repo sync | If docs live in a separate repo, both repos are updated | Code committed, design doc not written |
+| Template sync | Duplicated docs (e.g., check.md in two locations) are in sync | Source of truth updated, copy stale |
+| User-facing doc | Changes to user-visible behavior reflected in README/SKILL.md | CLI flag added, no mention in docs |
+| Decision recording | Non-obvious design decisions documented with rationale | "Why did we do X?" — no one remembers |
