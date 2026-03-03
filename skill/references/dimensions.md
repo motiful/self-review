@@ -1,6 +1,6 @@
 # Dimension Details
 
-Detailed checks for all 6 audit dimensions. Dimensions 1-3 are Progress-centric (highest priority). Dimensions 4-6 are cross-pillar deep checks.
+Detailed checks for all 7 audit dimensions. Dimensions 1-3 are Progress-centric (highest priority). Dimensions 4-7 are cross-pillar deep checks.
 
 ---
 

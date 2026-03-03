@@ -1,6 +1,6 @@
 ---
 name: self-review
-description: Run a 4-pillar, 6-dimension alignment audit on the current project. Use when the user says "self-review", "审视一下", or "audit". Report-only — never auto-fix.
+description: Run a 4-pillar, 7-dimension alignment audit on the current project. Use when the user says "self-review", "审视一下", or "audit". Report-only — never auto-fix.
 ---
 
 # Self-Review — 4-Pillar Alignment Audit
@@ -37,9 +37,9 @@ Scan the project for anchors in each pillar (all optional — skip pillars with 
 
 Report which anchors you found and which pillars have none.
 
-### Step 2: Run 6 Dimensions
+### Step 2: Run 7 Dimensions
 
-Each dimension checks drift between two pillars. Progress-adjacent dimensions (1-3) are highest priority — always run these. Design/Artifact/Skill cross-checks (4-6) run in deep audits or when specifically relevant.
+Each dimension checks drift between two pillars. Progress-adjacent dimensions (1-3) are highest priority — always run these. Cross-pillar deep checks (4-7) run in deep audits or when specifically relevant.
 
 See `references/dimensions.md` for detailed checks per dimension.
 
@@ -52,6 +52,7 @@ See `references/dimensions.md` for detailed checks per dimension.
 4. **Design ↔ Artifact** — Does the output match the design?
 5. **Design ↔ Skill** — Do our methods support our design goals?
 6. **Artifact ↔ Skill** — Does the output follow established methods?
+7. **Documentation Completeness** — Are all significant changes properly documented?
 
 ### Step 3: Report
 
@@ -88,8 +89,11 @@ Output a structured report:
 #### 6. Artifact ↔ Skill [✅ / ⚠️ / ❌]
 - [specific findings]
 
+#### 7. Documentation Completeness [✅ / ⚠️ / ❌]
+- [specific findings]
+
 ### Summary
-- X/6 aligned, Y/6 drifted, Z/6 broken
+- X/7 aligned, Y/7 drifted, Z/7 broken
 - [top priority fixes, if any]
 - [skill deposit candidates with recommendation: deposit / don't deposit / revisit when]
 ```
