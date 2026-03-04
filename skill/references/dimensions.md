@@ -31,6 +31,25 @@ Does claimed status match actual deliverables?
 | Status freshness | Compare artifact timestamps vs progress update timestamps | Artifact changed after last progress update |
 | Deliverable evidence | For each claimed deliverable, verify it exists and works | Progress claims "tests pass" but tests don't exist |
 | Gap detection | Items in progress with no corresponding artifact | Planned but never started, or started and abandoned |
+| Verification depth | Check artifact passes its own success criteria, not just exists | Marked done, artifact exists, but doesn't actually work |
+
+#### Artifact Verification Depth
+
+Checking "does the artifact exist?" is necessary but insufficient. Dimension 2 should assess verification depth — how thoroughly was the artifact validated?
+
+| Level | What it checks | Code example | Non-code example |
+|-------|---------------|-------------|-----------------|
+| **Exists** | Artifact was produced | File exists | Video/article generated |
+| **Build quality** | Follows conventions and standards | tsc passes, lint clean | Format correct, axes labeled |
+| **Effect quality** | Meets design intent | E2E tests pass, runtime verified | Video plays correctly, article logic holds |
+
+When auditing, flag the current verification level for each major artifact. If only Level 1-2 is achieved but the artifact involves behavioral changes (code that runs, content that conveys meaning), flag the gap:
+
+- Code artifacts with behavioral changes → should have runtime or e2e verification, not just compilation
+- Content artifacts (articles, videos, diagrams) → should be reviewed against design intent, not just format
+- Configuration artifacts → should be tested in the target environment
+
+"Compilation passed" is Level 2. The audit should push for Level 3 where applicable.
 
 ### 3. Progress ↔ Skill
 

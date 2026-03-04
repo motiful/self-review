@@ -37,6 +37,22 @@ Scan the project for anchors in each pillar (all optional — skip pillars with 
 
 Report which anchors you found and which pillars have none.
 
+#### Project-Specific Standards
+
+Beyond the standard anchors, scan for project-specific quality standards that should inform the audit:
+
+| Location | What to look for |
+|----------|-----------------|
+| `CLAUDE.local.md` | Project-specific rules, testing requirements, workflow preferences |
+| `.claude/rules/*.md` | Automated rules that encode project standards |
+| `CLAUDE.md` project sections | Inline quality gates, conventions, anti-patterns |
+
+If found, these standards become additional checks in Dimensions 4-6 (cross-pillar). For example:
+- CLAUDE.md says "capture-pane is debug only" → Dimension 4 checks code doesn't use capture-pane for core logic
+- CLAUDE.local.md says "run tests before committing" → Dimension 2 checks if test evidence exists
+
+If the audit finds recurring quality issues with no corresponding standard, note it as a candidate for the user to add to their CLAUDE.md or rules.
+
 ### Step 2: Run 7 Dimensions
 
 Each dimension checks drift between two pillars. Progress-adjacent dimensions (1-3) are highest priority — always run these. Cross-pillar deep checks (4-7) run in deep audits or when specifically relevant.
