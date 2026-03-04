@@ -39,19 +39,21 @@ Report which anchors you found and which pillars have none.
 
 #### Project-Specific Standards
 
-Beyond the standard anchors, scan for project-specific quality standards that should inform the audit:
+Beyond the standard anchors, scan for project-specific quality standards that should inform the audit. These files vary by platform — check whichever exist:
 
-| Location | What to look for |
-|----------|-----------------|
-| `CLAUDE.local.md` | Project-specific rules, testing requirements, workflow preferences |
-| `.claude/rules/*.md` | Automated rules that encode project standards |
-| `CLAUDE.md` project sections | Inline quality gates, conventions, anti-patterns |
+| Platform | Project instructions | Local/private overrides | Rules/standards |
+|----------|---------------------|------------------------|-----------------|
+| Claude Code | `CLAUDE.md` | `CLAUDE.local.md` | `.claude/rules/*.md` |
+| Codex | `AGENTS.md` | `AGENTS.override.md` | — |
+| OpenClaw | `AGENTS.md`, `SOUL.md` | via `openclaw.json` | — |
+| Generic | `README.md`, `CONTRIBUTING.md` | — | `.editorconfig`, linter configs |
 
 If found, these standards become additional checks in Dimensions 4-6 (cross-pillar). For example:
-- CLAUDE.md says "capture-pane is debug only" → Dimension 4 checks code doesn't use capture-pane for core logic
-- CLAUDE.local.md says "run tests before committing" → Dimension 2 checks if test evidence exists
+- `CLAUDE.md` says "capture-pane is debug only" → Dimension 4 checks code doesn't use capture-pane for core logic
+- `AGENTS.override.md` says "run tests before committing" → Dimension 2 checks if test evidence exists
+- `CONTRIBUTING.md` says "no direct pushes to main" → Dimension 6 checks branch workflow
 
-If the audit finds recurring quality issues with no corresponding standard, note it as a candidate for the user to add to their CLAUDE.md or rules.
+If the audit finds recurring quality issues with no corresponding standard, note it as a candidate for the user to add to their project instructions file.
 
 ### Step 2: Run 7 Dimensions
 

@@ -1,6 +1,6 @@
 # Self-Review
 
-A Claude Code skill that runs structured alignment audits on any project. Checks whether your design, artifacts, skills, and progress are in sync.
+An agent skill that runs structured alignment audits on any project. Checks whether your design, artifacts, skills, and progress are in sync. Works with Claude Code, Codex, OpenClaw, and any agent that supports the [AgentSkills](https://agentskills.io) standard.
 
 ## What It Does
 
@@ -12,22 +12,45 @@ Works for any project type: code, content, video, research — anything with del
 
 ## Install
 
-Clone and symlink to your Claude Code skills directory:
+### Claude Code
+
+```bash
+/plugin marketplace add motiful/self-review
+/plugin install self-review@self-review-skills
+```
+
+### Codex
+
+```bash
+# In a Codex session:
+$skill-installer install self-review from github.com/motiful/self-review
+```
+
+### OpenClaw
+
+```bash
+clawhub install self-review
+```
+
+### Manual (any agent)
 
 ```bash
 git clone https://github.com/motiful/self-review.git
-ln -sfn "$(pwd)/self-review/skill" ~/.claude/skills/self-review
+# Then symlink skill/ to your agent's skills directory:
+ln -sfn "$(pwd)/self-review/skill" ~/.claude/skills/self-review      # Claude Code
+ln -sfn "$(pwd)/self-review/skill" ~/.agents/skills/self-review      # Codex
+ln -sfn "$(pwd)/self-review/skill" ~/.openclaw/skills/self-review    # OpenClaw
 ```
 
 ## Usage
 
-In any Claude Code session, say:
+Trigger the skill in any session:
 
-- `/self-review`
+- `/self-review` or `$self-review` (depending on platform)
 - `self-review`
 - `audit`
 
-The skill will scan your project, discover anchors in each pillar, run dimensional checks, and output a structured report with specific file paths and line numbers.
+The skill scans your project, discovers anchors in each pillar, runs dimensional checks, and outputs a structured report with specific file paths and line numbers.
 
 ## The 4 Pillars
 
@@ -76,11 +99,14 @@ The skill will scan your project, discover anchors in each pillar, run dimension
 
 ## Project-Specific Standards
 
-The skill automatically discovers project-level quality gates:
+The skill automatically discovers project-level quality gates across platforms:
 
-- `CLAUDE.md` — project principles and conventions
-- `CLAUDE.local.md` — local development rules
-- `.claude/rules/*.md` — automated quality standards
+| Platform | Project instructions | Local overrides |
+|----------|---------------------|-----------------|
+| Claude Code | `CLAUDE.md` | `CLAUDE.local.md`, `.claude/rules/*.md` |
+| Codex | `AGENTS.md` | `AGENTS.override.md` |
+| OpenClaw | `AGENTS.md`, `SOUL.md` | via `openclaw.json` |
+| Generic | `README.md`, `CONTRIBUTING.md` | linter configs |
 
 These become additional checks in the deep dimensions.
 
