@@ -63,7 +63,7 @@ See `references/dimensions.md` for detailed checks per dimension.
 
 **Priority (Progress-centric):**
 1. **Progress ↔ Design** — Are we aligned with design intent?
-2. **Progress ↔ Artifact** — Does claimed status match actual deliverables?
+2. **Progress ↔ Artifact** — Does claimed status match actual deliverables? **Must execute verification (not just report gaps).**
 3. **Progress ↔ Skill** — Any lessons to capture? Existing skills need updating?
 
 **Deep audit:**
@@ -118,7 +118,7 @@ Output a structured report:
 
 ## Rules
 
-- **Report only** — flag issues, never auto-fix.
+- **Report only, never auto-fix** — flag issues and surface them, but do not modify code or files. Exception: Dimension 2 verification MUST execute tests (build, run, CLI commands) to validate artifacts — this is read-only execution for verification, not modification.
 - **Progress first** — always start from "what are we doing now?" and radiate outward.
 - **Skip gracefully** — if a pillar has no anchors, skip its dimensions with a note.
 - **Be specific** — cite file paths and line numbers, not vague descriptions.

@@ -35,21 +35,51 @@ Does claimed status match actual deliverables?
 
 #### Artifact Verification Depth
 
-Checking "does the artifact exist?" is necessary but insufficient. Dimension 2 should assess verification depth — how thoroughly was the artifact validated?
+Checking "does the artifact exist?" is necessary but insufficient. Dimension 2 must both **assess** and **execute** verification to the appropriate depth.
 
 | Level | What it checks | Code example | Non-code example |
 |-------|---------------|-------------|-----------------|
-| **Exists** | Artifact was produced | File exists | Video/article generated |
-| **Build quality** | Follows conventions and standards | tsc passes, lint clean | Format correct, axes labeled |
-| **Effect quality** | Meets design intent | E2E tests pass, runtime verified | Video plays correctly, article logic holds |
+| **L1 Exists** | Artifact was produced | File exists | Video/article generated |
+| **L2 Build** | Follows conventions and standards | tsc passes, lint clean | Format correct, axes labeled |
+| **L3 Integration** | Business logic works correctly | Runtime execution, CLI commands produce expected output | Content reads correctly, config takes effect |
+| **L4 E2E** | Meets design intent end-to-end | Full user workflow verified | Complete user scenario validated |
 
-When auditing, flag the current verification level for each major artifact. If only Level 1-2 is achieved but the artifact involves behavioral changes (code that runs, content that conveys meaning), flag the gap:
+**Minimum bar: L3 (Integration).** L2-only (compilation) is insufficient for any artifact with behavioral changes. L4 when design expectations demand it.
 
-- Code artifacts with behavioral changes → should have runtime or e2e verification, not just compilation
-- Content artifacts (articles, videos, diagrams) → should be reviewed against design intent, not just format
-- Configuration artifacts → should be tested in the target environment
+#### Verification Execution Protocol
 
-"Compilation passed" is Level 2. The audit should push for Level 3 where applicable.
+Self-review MUST execute verification, not just report that it's missing. The process:
+
+1. **Determine design expectation**: Read the design/progress docs. What does "done" mean for this artifact? "Compiles" vs "runs correctly" vs "handles edge cases" are different bars.
+
+2. **Execute tests at the appropriate level**:
+   - L2 (Build): Run the build/compile/lint command. Report pass/fail.
+   - L3 (Integration): Run the artifact. For code: execute CLI commands, call functions, verify output. For configs: apply and check effect. For content: verify it renders/reads correctly.
+   - L4 (E2E): Run the full user workflow. For a CLI tool: simulate a real usage scenario. For an API: call it with real inputs and verify responses.
+
+3. **Report results quantitatively**:
+   - What was tested (specific commands/scenarios)
+   - What passed / what failed (with actual output)
+   - Current verification level achieved (L1/L2/L3/L4)
+   - Gap to design expectation (e.g., "design expects L4, achieved L3 — E2E not tested")
+
+4. **If a test cannot be automated**, you must:
+   - Exhaust all options first. "I can't test this" is often wrong — investigate before declaring it untestable.
+   - If truly untestable (requires human interaction, costs excessive tokens, needs external services): document exactly what needs manual verification and surface it as a **human-test-required** item in the report.
+
+#### Verification Depth by Artifact Type
+
+| Artifact type | Minimum level | How to verify |
+|---------------|--------------|---------------|
+| Code (library/module) | L3 | Import and call key functions, verify return values |
+| Code (CLI command) | L3 | Execute the command with real args, check output |
+| Code (daemon/service) | L3 | Start it, send requests, verify responses |
+| Code (bug fix) | L3 | Reproduce the original bug scenario, verify it's fixed |
+| Configuration | L3 | Apply the config, verify the system behaves differently |
+| Skill/documentation | L2 | Verify structure, check internal links resolve, no stale references |
+| Infrastructure (CI/CD) | L3 | Trigger the pipeline or simulate trigger, verify it runs |
+
+**L4 (E2E) is required when**: the design doc, progress, or acceptance criteria explicitly state end-to-end behavior, or when the artifact is a user-facing workflow with multiple interacting components.
 
 ### 3. Progress ↔ Skill
 
