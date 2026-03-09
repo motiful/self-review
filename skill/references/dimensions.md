@@ -1,14 +1,18 @@
 # Dimension Details
 
-Detailed checks for all 7 audit dimensions. Dimensions 1-3 are Progress-centric (highest priority). Dimensions 4-7 are cross-pillar deep checks.
+Detailed checks for all 6 audit dimensions. Dimensions 1-3 are Progress-centric (highest priority). Dimensions 4-6 are cross-pillar deep checks. This is the complete C(4,2) combination of the 4 pillars.
+
+All dimensions are guided by the **Audit Principles** defined in SKILL.md. The 6 principles are embedded as check questions in the dimensions where they apply most — look for the `[principle]` tags.
 
 ---
 
 ## Priority Dimensions (Progress-centric)
 
-### 1. Progress ↔ Design
+### 1. Progress <> Design
 
 Are we aligned with design intent?
+
+**Scope rule:** Only check alignment for in-scope items. Deferred items only need to be tracked, not completed.
 
 | What to check | How | Common drifts |
 |---|---|---|
@@ -18,10 +22,19 @@ Are we aligned with design intent?
 | Direction check | Is the trajectory moving toward the design vision? | Progress shows activity, but drifting from design goals |
 | Deferred items | Verify deferred items are tracked somewhere | Silently dropped — not in progress, not in design |
 | Dependency ordering | Check progress respects design's dependency chain | Phase 3 item started, but Phase 2 dependency unfinished |
+| Decision recording | Non-obvious design decisions documented with rationale | "Why did we do X?" — no one remembers |
+| Changelog coverage | New features/breaking changes have design docs or changelog entries | Feature shipped, no documentation of why or how |
+| `[E1 Feasible]` | Can current tech/dependencies/resources support this design? Any dependency on capabilities that don't exist yet? | Design requires API that was deprecated; timeline assumes 2 engineers but only 1 available |
 
-### 2. Progress ↔ Artifact
+**Non-code examples:**
+- Video project: Script calls for 5 scenes, progress only schedules 3
+- Documentation project: Outline covers 4 topics, progress only has 2 marked done
+
+### 2. Progress <> Artifact
 
 Does claimed status match actual deliverables?
+
+**Scope rule:** Only verify artifacts that Progress claims are in-scope and done/in-progress. Do not flag missing artifacts for deferred items.
 
 | What to check | How | Common drifts |
 |---|---|---|
@@ -32,6 +45,15 @@ Does claimed status match actual deliverables?
 | Deliverable evidence | For each claimed deliverable, verify it exists and works | Progress claims "tests pass" but tests don't exist |
 | Gap detection | Items in progress with no corresponding artifact | Planned but never started, or started and abandoned |
 | Verification depth | Check artifact passes its own success criteria, not just exists | Marked done, artifact exists, but doesn't actually work |
+| Progress accuracy | Progress file reflects actual state of work | Code merged, progress still says "in progress" |
+| Cross-repo sync | If docs live in a separate repo, both repos are updated | Code committed, design doc not written |
+| `[T1 Verifiable & Verified]` | For each claimed-complete deliverable: where is the verification evidence? Can you run it and see the result? | Progress says "tests pass" — but no test output, no CI log, no evidence |
+| `[E2 Boundary-Complete]` | Within current scope, is there any input/scenario that causes unhandled failure? Are error paths covered? | Happy path works, but invalid input crashes without message |
+| `[E3 Maintainable]` | Could someone else pick this up and continue? Are key decisions recorded? | Code works but no comments on non-obvious choices; no onboarding path |
+
+**Non-code examples:**
+- Video project: Progress says "rough cut complete", but exported file is only half the expected duration
+- Design project: Progress says "homepage design done", but mockup is missing mobile breakpoint
 
 #### Artifact Verification Depth
 
@@ -78,10 +100,15 @@ Self-review MUST execute verification, not just report that it's missing. The pr
 | Configuration | L3 | Apply the config, verify the system behaves differently |
 | Skill/documentation | L2 | Verify structure, check internal links resolve, no stale references |
 | Infrastructure (CI/CD) | L3 | Trigger the pipeline or simulate trigger, verify it runs |
+| Design document | L2 | Structure complete, internally consistent, covers declared scope, no contradictory statements |
+| Article / blog post | L2 | Arguments supported, no factual errors, structure matches outline |
+| Video | L2 | Check file exists + metadata (duration, codec). Visual/audio content requires human verification — surface as human-test-required |
+| Visual design (UI/graphic) | L2 | Check file exists + dimensions/format. Visual quality requires human verification — surface as human-test-required |
+| Presentation / slides | L2 | Flow logical, key points covered, no orphan slides |
 
 **L4 (E2E) is required when**: the design doc, progress, or acceptance criteria explicitly state end-to-end behavior, or when the artifact is a user-facing workflow with multiple interacting components.
 
-### 3. Progress ↔ Skill
+### 3. Progress <> Skill
 
 Any lessons to capture? Existing skills need updating?
 
@@ -93,6 +120,10 @@ Any lessons to capture? Existing skills need updating?
 | Conflict detection | Do recent learnings contradict existing skills? | New finding invalidates old skill rule |
 | Skill coverage gaps | Are there active areas with no corresponding skill? | Doing complex work repeatedly with no documented method |
 | Deposit backlog | List skills that should exist but don't yet | Pattern used 3+ times but never formalized |
+
+**Non-code examples:**
+- Video project: Discovered a reliable audio-sync workflow during rough cut, but didn't document it — next editor will reinvent it
+- Research project: Developed a citation verification checklist across 3 papers, never formalized into a reusable template
 
 #### Skill Deposit Criteria
 
@@ -122,9 +153,11 @@ For each candidate pattern flagged by this dimension:
 
 ## Deep Dimensions
 
-### 4. Design ↔ Artifact
+### 4. Design <> Artifact
 
 Does what was built match what was designed?
+
+**Scope rule:** Only compare design specs against artifacts that are in-scope per the locked scope. A designed feature that belongs to a future phase is not a defect.
 
 | What to check | How | Common drifts |
 |---|---|---|
@@ -134,8 +167,27 @@ Does what was built match what was designed?
 | Decision compliance | For each recorded decision, verify artifact follows it | Decision made but artifact does the opposite |
 | Rejected alternatives | Verify artifact doesn't use explicitly rejected approaches | Rejected approach snuck in during execution |
 | Scope boundaries | Compare designed scope vs what artifact actually covers | Scope creep or under-delivery |
+| Simplicity check | Is the artifact the simplest sufficient implementation of the design? | Design calls for X, artifact implements X + Y + Z "just in case" |
+| User-facing doc | Changes to user-visible behavior reflected in README/SKILL.md | CLI flag added, no mention in docs |
+| `[T3 Simplest Sufficient]` | Can any part be removed without losing designed capability? Is there a simpler approach with equal effect? | Three abstraction layers where one would do; config system for two options |
+| `[E1 Feasible]` | Does the artifact depend on anything unavailable or unrealistic? | Uses an API that requires enterprise license; assumes 100ms latency on a 2s connection |
 
-### 5. Design ↔ Skill
+**Non-code examples:**
+- Documentation project: Design says "for beginners", but article uses heavy jargon without explanation
+- Video project: Design requires "light, humorous tone", but the final cut has slow, somber pacing
+
+#### Simplicity Check (Principle: Simplest Sufficient Solution)
+
+This is the primary dimension where the simplicity principle is evaluated:
+
+- **Over-engineering**: Code — unnecessary abstraction layers. Docs — unnecessary chapters or classification schemes. Video — unnecessary effects or transitions that don't serve the story.
+- **Unnecessary entities**: Code — modules that could be deleted. Design — concepts or roles that add complexity without value. Video — scenes that don't advance the narrative.
+- **Premature generalization**: Code — solving a more general problem than designed. Docs — covering topics outside the stated scope "just in case". Design — accommodating users that aren't in the target audience.
+- **Simpler alternatives**: Across all domains — could the same design intent be achieved with fundamentally fewer moving parts?
+
+Flag only when a simpler alternative exists with equal capability. "Simple" does not mean "fewer lines" — it means fewer concepts, fewer moving parts, fewer things that can break.
+
+### 5. Design <> Skill
 
 Do our methods support our design goals?
 
@@ -147,7 +199,11 @@ Do our methods support our design goals?
 | Coverage | Are all critical design areas supported by skills? | Design has 5 pillars, skills only cover 2 |
 | Anti-pattern prevention | Do skills guard against design's rejected alternatives? | Design rejected approach X, no skill warns against it |
 
-### 6. Artifact ↔ Skill
+**Non-code examples:**
+- Video project: Design principle says "prioritize storytelling over production value", but no editing skill enforces this — editors default to polishing visuals
+- Documentation project: Design says "write for international audience", but no style guide addresses localization-friendly writing
+
+### 6. Artifact <> Skill
 
 Does the output follow established methods?
 
@@ -159,16 +215,9 @@ Does the output follow established methods?
 | Behavioral rules | Check if skill rules are actually enforced | Rule says "never do X", but artifact does X |
 | Quality gates | Verify documented quality checks were actually applied | Checklist exists but wasn't followed |
 | Artifact-as-skill check | If artifact IS a skill, does it follow skill conventions? | Built a SKILL.md that doesn't match the skill template |
-
-### 7. Documentation Completeness
-
-Are all significant changes properly documented?
-
-| What to check | How | Common drifts |
-|---|---|---|
-| Changelog coverage | New features/breaking changes have design docs or changelog entries | Feature shipped, no documentation of why or how |
-| Progress accuracy | Progress file reflects actual state of work | Code merged, progress still says "in progress" |
-| Cross-repo sync | If docs live in a separate repo, both repos are updated | Code committed, design doc not written |
 | Template sync | Duplicated docs (e.g., check.md in two locations) are in sync | Source of truth updated, copy stale |
-| User-facing doc | Changes to user-visible behavior reflected in README/SKILL.md | CLI flag added, no mention in docs |
-| Decision recording | Non-obvious design decisions documented with rationale | "Why did we do X?" — no one remembers |
+| `[E3 Maintainable]` | Can someone new understand and modify this artifact by following the documented skills? | Skill says "use pattern X", artifact uses undocumented pattern Y — handoff breaks |
+
+**Non-code examples:**
+- Video project: Team style guide says "standard transitions use dissolve", final cut uses jump cuts
+- Documentation project: Writing standard says "max 5 sentences per paragraph", article has multiple 10+ sentence paragraphs

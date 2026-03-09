@@ -1,6 +1,6 @@
 ---
 name: self-review
-description: Run a 4-pillar, 7-dimension alignment audit on the current project. Use when the user says "self-review", "审视一下", or "audit". Report-only — never auto-fix.
+description: Run a 4-pillar, 6-dimension alignment audit on the current project. Use when the user says "self-review", "审视一下", or "audit". Report-only — never auto-fix.
 ---
 
 # Self-Review — 4-Pillar Alignment Audit
@@ -11,22 +11,33 @@ A structured audit that checks whether a project's design, artifacts, skills, an
 
 User says: `/self-review`, `审视一下`, `audit`, or `self-review`
 
+## Audit Principles
+
+Six principles guide all dimension checks. They are embedded as check questions in each dimension — you don't need to apply them separately.
+
+| # | Principle | One-line definition |
+|---|-----------|-------------------|
+| T1 | Verifiable & Verified | Claims must be testable, and evidence of passing must exist |
+| T2 | No Internal Contradiction | No conflicting statements across pillars |
+| T3 | Simplest Sufficient Solution | Don't introduce what isn't needed |
+| E1 | Feasible | Achievable with current resources |
+| E2 | Boundary-Complete | No fatal gaps within current scope |
+| E3 | Maintainable | Others can understand and continue the work |
+
 ## The 4 Pillars
 
-| Pillar | What it covers | Examples |
-|--------|---------------|----------|
-| **Design** | Intent, decisions, architecture, specs | CLAUDE.md, design docs, architecture diagrams, requirements, specs |
-| **Artifact** | Actual deliverables — whatever was built | Code, articles, videos, reports, configs, skills, any output |
-| **Skill** | How things are done — reusable methods, standards, accumulated know-how | SKILL.md, style guides, workflows, conventions, templates |
-| **Progress** | Where we are — plans, tracking, milestones | progress.md, plans, changelogs, task lists, roadmaps |
-
-Note: An artifact can itself be a skill (e.g. building a SKILL.md is both a deliverable and a methodology deposit).
+| Pillar | Core question | What it covers | Common carriers (examples, not definitions) |
+|--------|--------------|----------------|---------------------------------------------|
+| **Design** | Why are we doing this? What should it become? | Intent, decisions, constraints, specs | CLAUDE.md, design docs, requirements, even commit messages or verbal agreements |
+| **Artifact** | What was actually produced? | Any deliverable — code, documents, designs, videos, skills, configs | src/, articles, exported videos, design files, SKILL.md itself |
+| **Skill** | How do we do things? What did we learn? | Reusable methods, standards, accumulated know-how | Style guides, workflows, conventions, templates, coding patterns |
+| **Progress** | Where are we? What's next? | Plans, status, milestones, tracking | progress.md, changelogs, git log, TODO comments, roadmaps |
 
 ## Process
 
 ### Step 1: Discover Anchors
 
-Scan the project for anchors in each pillar (all optional — skip pillars with no anchors):
+Scan the project for anchors in each pillar (all optional — skip pillars with no anchors after attempting inference):
 
 | Pillar | Typical anchors |
 |--------|----------------|
@@ -44,33 +55,96 @@ Beyond the standard anchors, scan for project-specific quality standards that sh
 | Platform | Project instructions | Local/private overrides | Rules/standards |
 |----------|---------------------|------------------------|-----------------|
 | Claude Code | `CLAUDE.md` | `CLAUDE.local.md` | `.claude/rules/*.md` |
+| Cursor | `.cursor/rules/*.mdc` | `.cursor/rules/personal.mdc` (gitignored) | `.cursorrules` (legacy) |
 | Codex | `AGENTS.md` | `AGENTS.override.md` | — |
 | OpenClaw | `AGENTS.md`, `SOUL.md` | via `openclaw.json` | — |
 | Generic | `README.md`, `CONTRIBUTING.md` | — | `.editorconfig`, linter configs |
 
-If found, these standards become additional checks in Dimensions 4-6 (cross-pillar). For example:
+If found, these standards become additional checks in cross-pillar dimensions. For example:
 - `CLAUDE.md` says "capture-pane is debug only" → Dimension 4 checks code doesn't use capture-pane for core logic
 - `AGENTS.override.md` says "run tests before committing" → Dimension 2 checks if test evidence exists
 - `CONTRIBUTING.md` says "no direct pushes to main" → Dimension 6 checks branch workflow
 
-If the audit finds recurring quality issues with no corresponding standard, note it as a candidate for the user to add to their project instructions file.
+#### Domain Skills
 
-### Step 2: Run 7 Dimensions
+Scan `.claude/skills/` (or platform equivalent) for skills whose description matches the current project's domain. If found, treat the standards and rules defined in those skills as additional check criteria — layer them on top of the built-in principles when running dimensions.
 
-Each dimension checks drift between two pillars. Progress-adjacent dimensions (1-3) are highest priority — always run these. Cross-pillar deep checks (4-7) run in deep audits or when specifically relevant.
+Example: A `video-editing` skill defines "jump cuts must not exceed 3 frames" → Dimension 4 and 6 check this rule against the artifact.
+
+Only include skills that are clearly relevant to the project. Do not force-apply unrelated skills.
+
+#### Implicit Anchor Inference
+
+When a pillar has no dedicated files, attempt to infer its content from implicit sources before skipping:
+
+| Pillar | Implicit sources to check |
+|--------|--------------------------|
+| Design | Commit messages, PR descriptions, README intro, inline comments stating intent |
+| Artifact | Any output file (this pillar is almost never empty) |
+| Skill | Recurring code patterns, consistent conventions across files |
+| Progress | Git log timeline, branch names, TODO/FIXME comments |
+
+Mark inferred anchors as `[inferred]` in the report. If inference produces nothing useful, then skip the pillar with a note.
+
+#### Design Introspection
+
+When Design anchors are found, evaluate the design itself — not just its alignment with other pillars. Apply all three theoretical principles:
+
+- **Clarity**: Is the stated goal well-defined? Could someone new understand the intent?
+- **Value**: Is this a well-formulated problem? Is it worth solving in this form?
+- **Scope**: Is the scope appropriate — not too broad, not too narrow?
+- **Assumptions**: Are there stale assumptions, blind spots, or unconsidered alternatives?
+- **Currency**: Based on current knowledge and context, does the design still make sense? Use web search to verify — technologies change, APIs deprecate, better approaches emerge.
+- **Simplicity**: Is this the simplest sufficient solution? Can anything be removed without losing capability? Are there simpler alternatives with equal explanatory/functional power?
+
+For the **Assumptions** and **Currency** checks, actively use available research tools (WebSearch, web browsing) to validate design assumptions against current information. Don't rely solely on local context — search for the latest state of relevant technologies, competing approaches, and known pitfalls.
+
+**Always add the current year to search queries** (e.g., "React server components 2026").
+
+For each major design decision identified above, ask these three questions:
+1. Can this actually be built/delivered with the resources available? (What would block it?)
+2. What scenario within the current scope would break this? (What's the weakest point?)
+3. Is there a way to achieve the same goal with fewer moving parts? (What can be removed?)
+
+If any question reveals a concern, report it. These questions only apply to decisions that significantly affect the project direction — skip for minor choices.
+
+Report design introspection findings as a preamble before dimensional checks.
+
+### Step 1.5: Lock Scope
+
+**This step is mandatory.** Before running any dimension checks, establish the audit boundary from Progress:
+
+1. **Read current phase** from Progress anchors. Identify what the project claims to be working on *right now*.
+
+2. **Classify all items into three categories:**
+
+| Category | Definition | Audit treatment |
+|----------|-----------|-----------------|
+| **In-scope** | Items belonging to the current phase/milestone | Full dimensional check against all 6 principles |
+| **Deferred** | Items explicitly postponed to a future phase | Only check: is it tracked somewhere? Not lost silently? |
+| **Out-of-scope** | Items not in any plan | Do not check. Do not flag absence as a defect |
+
+3. **State the locked scope explicitly in the report** so the reader knows what was and wasn't audited.
+
+**The core rule: do not judge current work by future plans.** A feature designed for Phase 3 that doesn't exist yet is not a defect in Phase 1. An architecture that will need refactoring later is acceptable if the current phase is independently testable and shippable.
+
+Flag Phase 1 artifacts that depend on unbuilt Phase 2 — those are real defects. But "Phase 2 hasn't started yet" is never a finding.
+
+### Step 2: Run 6 Dimensions
+
+Each dimension checks drift between two pillars. This is the complete C(4,2) combination — no exceptions, no artificial extras.
+
+**Priority (Progress-centric) — always run:**
+1. **Progress <> Design** — Are we aligned with design intent?
+2. **Progress <> Artifact** — Does claimed status match actual deliverables? **Must execute verification.**
+3. **Progress <> Skill** — Any lessons to capture? Existing skills need updating?
+
+**Deep audit — run in deep audits or when specifically relevant:**
+4. **Design <> Artifact** — Does the output match the design?
+5. **Design <> Skill** — Do our methods support our design goals?
+6. **Artifact <> Skill** — Does the output follow established methods?
 
 See `references/dimensions.md` for detailed checks per dimension.
-
-**Priority (Progress-centric):**
-1. **Progress ↔ Design** — Are we aligned with design intent?
-2. **Progress ↔ Artifact** — Does claimed status match actual deliverables? **Must execute verification (not just report gaps).**
-3. **Progress ↔ Skill** — Any lessons to capture? Existing skills need updating?
-
-**Deep audit:**
-4. **Design ↔ Artifact** — Does the output match the design?
-5. **Design ↔ Skill** — Do our methods support our design goals?
-6. **Artifact ↔ Skill** — Does the output follow established methods?
-7. **Documentation Completeness** — Are all significant changes properly documented?
 
 ### Step 3: Report
 
@@ -78,6 +152,15 @@ Output a structured report:
 
 ```
 ## Self-Review Report
+
+### Design Introspection
+- [findings on clarity, value, scope, assumptions, currency, simplicity]
+
+### Scope Lock
+- **Current phase**: [phase name/description]
+- **In-scope**: [items being audited]
+- **Deferred**: [items tracked but not yet due]
+- **Out-of-scope**: [not applicable to this audit]
 
 ### Anchors Found
 - **Design**: [paths]
@@ -87,42 +170,56 @@ Output a structured report:
 
 ### Priority Dimensions (Progress-centric)
 
-#### 1. Progress ↔ Design [✅ Aligned / ⚠️ Drift / ❌ Broken]
-- [specific findings with file paths]
+#### 1. Progress <> Design [Aligned / Drift / Broken]
+- [specific findings with file paths, scoped to current phase]
 
-#### 2. Progress ↔ Artifact [✅ / ⚠️ / ❌]
-- [specific findings]
+#### 2. Progress <> Artifact [Aligned / Drift / Broken]
+- [specific findings, with verification evidence]
 
-#### 3. Progress ↔ Skill [✅ / ⚠️ / ❌]
+#### 3. Progress <> Skill [Aligned / Drift / Broken]
 - [specific findings]
 
 ### Deep Dimensions
 
-#### 4. Design ↔ Artifact [✅ / ⚠️ / ❌]
+#### 4. Design <> Artifact [Aligned / Drift / Broken]
+- [specific findings, scoped to current phase]
+
+#### 5. Design <> Skill [Aligned / Drift / Broken]
 - [specific findings]
 
-#### 5. Design ↔ Skill [✅ / ⚠️ / ❌]
-- [specific findings]
-
-#### 6. Artifact ↔ Skill [✅ / ⚠️ / ❌]
-- [specific findings]
-
-#### 7. Documentation Completeness [✅ / ⚠️ / ❌]
+#### 6. Artifact <> Skill [Aligned / Drift / Broken]
 - [specific findings]
 
 ### Summary
-- X/7 aligned, Y/7 drifted, Z/7 broken
+- X/6 aligned, Y/6 drifted, Z/6 broken
 - [top priority fixes, if any]
-- [skill deposit candidates with recommendation: deposit / don't deposit / revisit when]
+- [skill deposit candidates with recommendation]
 ```
+
+#### Standard Recommendations
+
+If the audit finds recurring quality issues with no corresponding standard, include a **Standard Recommendation** in the report:
+1. Specify the exact file path where the standard should be persisted (use the platform table in Step 1)
+2. Draft the standard text ready to be added
+3. Explain why this standard is worth adding (what recurring issue it prevents)
+
+**Persistence routing:**
+- **Project-local standards** (single-project, simple) → platform-native file: `.claude/rules/<topic>.md` (CC), `AGENTS.override.md` (Codex), `.cursor/rules/<topic>.mdc` (Cursor)
+- **Cross-project reusable standards** → suggest creating a rule-skill via Skill-Forge. Rule-skills are portable across platforms and publishable — see the [rules-as-skills](https://github.com/motiful/rules-as-skills) methodology
+- **Platform lacks native rules** (e.g., OpenClaw) → rule-skill is the only persistent option
+
+Default to platform-native files (lower friction). Suggest rule-skills when the standard could benefit other projects. Always present both options — the user decides.
 
 ## Rules
 
-- **Report only, never auto-fix** — flag issues and surface them, but do not modify code or files. Exception: Dimension 2 verification MUST execute tests (build, run, CLI commands) to validate artifacts — this is read-only execution for verification, not modification.
-- **Progress first** — always start from "what are we doing now?" and radiate outward.
-- **Skip gracefully** — if a pillar has no anchors, skip its dimensions with a note.
-- **Be specific** — cite file paths and line numbers, not vague descriptions.
-- **No false positives** — only flag real drift, not stylistic differences.
-- **Skill deposits need criteria** — always check for lessons to capture, but evaluate each candidate against the deposit criteria in `references/dimensions.md` (Dimension 3). Not every solved problem is worth a skill file.
-- **Platform-agnostic** — works for code, content, video, research, anything.
-- **Language-agnostic** — no assumption about programming language or human language.
+- **Report only, never auto-fix** — flag issues, do not modify files. Exception: Dimension 2 MUST execute verification (build, run, CLI) — read-only execution.
+- **Scope first** — lock scope from Progress before any dimension. Never flag deferred/out-of-scope items.
+- **Progress first** — start from "what are we doing now?" and radiate outward.
+- **Scan by content, not by file type** — a commit message can carry Design intent, a code comment can carry Progress status. Never skip content because "it's not in the right file type for this pillar."
+- **Infer before skipping** — when a pillar has no explicit files, check implicit sources before declaring it empty.
+- **Built-in principles + user standards** — the 6 principles are the baseline; project rules and domain skills add to it, never replace it.
+- **Be specific** — cite file paths and line numbers.
+- **No false positives** — only flag real drift. "Not yet built" is not drift if deferred.
+- **Skill deposits need criteria** — evaluate against deposit criteria in dimensions.md (Dimension 3).
+- **Always add current year to search queries** — for Currency and Assumptions checks.
+- **Platform-agnostic, language-agnostic.**
