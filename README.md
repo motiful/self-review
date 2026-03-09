@@ -144,6 +144,22 @@ The skill scans your project, discovers anchors in each pillar, locks the curren
 #### 3. Progress <> Skill [Aligned]
 - No new deposit needed — stable published skill
 
+### Deep Dimensions
+
+#### 4. Design <> Artifact [Aligned]
+- SKILL.md implements all 6 principles as embedded check questions
+- dimensions.md covers all C(4,2) = 6 pillar combinations
+- Report template matches process steps
+
+#### 5. Design <> Skill [Aligned]
+- Feynman principles mapped to T1/T2/T3, engineering to E1/E2/E3
+- Skill deposit criteria in Dimension 3 enforces knowledge-persistence design goal
+
+#### 6. Artifact <> Skill [Aligned]
+- Frontmatter follows Agent Skills standard (name, description)
+- Directory structure: skill/SKILL.md + skill/references/ per convention
+- No junk files in skill/
+
 ### Summary
 - 6/6 aligned, 0/6 drifted, 0/6 broken
 ```
