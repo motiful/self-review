@@ -88,7 +88,7 @@ Mark inferred anchors as `[inferred]` in the report. If inference produces nothi
 
 #### Design Introspection
 
-When Design anchors are found, evaluate the design itself — not just its alignment with other pillars. Apply all three theoretical principles:
+When Design anchors are found, evaluate the design itself — not just its alignment with other pillars. Apply the following checks:
 
 - **Clarity**: Is the stated goal well-defined? Could someone new understand the intent?
 - **Value**: Is this a well-formulated problem? Is it worth solving in this form?

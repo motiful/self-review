@@ -96,11 +96,9 @@ npx skills add motiful/self-review
 Or manually:
 
 ```bash
-git clone https://github.com/motiful/self-review ~/skills/self-review
+git clone https://github.com/motiful/self-review
 # Then symlink skill/ to your agent's skills directory
-# Claude Code: ln -sfn ~/skills/self-review/skill ~/.claude/skills/self-review
-# Cursor:      ln -sfn ~/skills/self-review/skill ~/.cursor/skills/self-review
-# Codex:       ln -sfn ~/skills/self-review/skill ~/.agents/skills/self-review
+ln -sfn ~/self-review/skill ~/.claude/skills/self-review
 ```
 
 ## Usage
@@ -118,36 +116,36 @@ The skill scans your project, discovers anchors in each pillar, locks the curren
 
 ### Design Introspection
 - Clarity: well-defined — "4-pillar, 6-dimension alignment audit"
-- Scope: appropriate, focused on audit methodology
-- Simplicity: principles condensed to 6-row index table, details inline in dimensions
+- Value: problem definition precise — "drift between intent and delivery"
+- Simplicity: 6 principles = 3 theoretical + 3 engineering, no excess concepts
 
 ### Scope Lock
-- Current phase: Content refactoring (pillar redefinition, principle inlining, cross-domain support)
+- Current phase: Published skill, post-refactor
 - In-scope: SKILL.md, dimensions.md, README.md
-- Deferred: none (single-phase refactor)
+- Deferred: none
 
 ### Anchors Found
-- Design: README.md, refactoring plan (conversation context)
+- Design: README.md (design intent + principles)
 - Artifact: skill/SKILL.md, skill/references/dimensions.md
 - Skill: skill/ directory (self-review is itself a skill)
-- Progress: [inferred] git diff — 3 files changed, 358 insertions, 135 deletions
+- Progress: [inferred] git log — 11 commits on main
 
 ### Priority Dimensions
 
 #### 1. Progress <> Design [Aligned]
-- All planned changes implemented, "do not change" items preserved
+- 6-dimension model consistent across all files
+- Feynman + engineering principle split documented in README
 
-#### 2. Progress <> Artifact [Drift]
-- .claude-plugin/plugin.json still says "7-dimension" (should be "6-dimension")
-- .claude-plugin/marketplace.json has same stale description
-- README line 31: "three sources" should be "two sources"
+#### 2. Progress <> Artifact [Aligned]
+- SKILL.md frontmatter valid (name, description)
+- All internal references resolve (dimensions.md exists, linked correctly)
+- L2 verified: structure complete, no broken links
 
 #### 3. Progress <> Skill [Aligned]
-- No new skill deposit needed — this is a refactor of existing skill
+- No new deposit needed — stable published skill
 
 ### Summary
-- 4/6 aligned, 2/6 drifted, 0/6 broken
-- Top fix: delete stale .claude-plugin/ directory, fix "three sources" typo
+- 6/6 aligned, 0/6 drifted, 0/6 broken
 ```
 
 ### Example: Video Project (Hypothetical)
