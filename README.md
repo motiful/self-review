@@ -128,7 +128,7 @@ The skill scans your project, discovers anchors in each pillar, locks the curren
 - Design: README.md (design intent + principles)
 - Artifact: skill/SKILL.md, skill/references/dimensions.md
 - Skill: skill/ directory (self-review is itself a skill)
-- Progress: [inferred] git log — 11 commits on main
+- Progress: [inferred] git log on main
 
 ### Priority Dimensions
 
