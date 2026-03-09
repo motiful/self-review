@@ -94,10 +94,27 @@ When Design anchors are found, evaluate the design itself — not just its align
 - **Value**: Is this a well-formulated problem? Is it worth solving in this form?
 - **Scope**: Is the scope appropriate — not too broad, not too narrow?
 - **Assumptions**: Are there stale assumptions, blind spots, or unconsidered alternatives?
-- **Currency**: Based on current knowledge and context, does the design still make sense? Use web search to verify — technologies change, APIs deprecate, better approaches emerge.
+- **Currency**: Is the project solving the right problem with current tools? (See detailed check below.)
 - **Simplicity**: Is this the simplest sufficient solution? Can anything be removed without losing capability? Are there simpler alternatives with equal explanatory/functional power?
 
-For the **Assumptions** and **Currency** checks, actively use available research tools (WebSearch, web browsing) to validate design assumptions against current information. Don't rely solely on local context — search for the latest state of relevant technologies, competing approaches, and known pitfalls.
+#### Currency & Assumptions Check
+
+**Scope rule**: Only check currency for in-scope items that are pending, in-progress, or blocked. Completed, working items are NOT checked — don't fix what isn't broken. Don't search dependency versions (that's a package manager's job).
+
+**Check process**:
+
+1. Extract unsolved problems from Progress (pending/blocked items only)
+2. For each unsolved problem, search: `"<problem description> solution <current year>"`
+3. Evaluate search results:
+
+| Finding | Label | Action |
+|---------|-------|--------|
+| No relevant new solution | Current | No action |
+| Community solution exists but immature (<6 months, few adopters, no major platform support) | Emerging | Note in report, don't recommend switching |
+| Community solution with significant adoption (major platform support, established project) | Problem Dissolved | Flag: "This problem may already be solved by X. Verify before continuing custom work." Include source URL |
+| A key design assumption has been invalidated (API added, limitation removed, standard changed) | Assumption Invalidated | Flag: "Design assumes X, but Y is now supported as of [date]." Include source URL |
+
+4. For Assumptions specifically: extract hard assumptions from Design anchors (patterns like "because X doesn't support Y", "since there's no way to Z", "limited by W"). Search each to verify it still holds.
 
 **Always add the current year to search queries** (e.g., "React server components 2026").
 
