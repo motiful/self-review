@@ -75,15 +75,33 @@ Checks alignment between every pillar pair — the complete C(4,2) combination w
 
 **Scope-aware auditing.** Before checking anything, Self-Review reads your Progress to lock the current phase. It classifies items as in-scope, deferred, or out-of-scope — then only audits in-scope work. "Phase 2 hasn't started yet" is never a finding.
 
-**It actually runs your code.** Dimension 2 doesn't just check if files exist — it executes builds, runs CLI commands, and verifies output at integration level. "Tests pass" means it ran the tests.
+**4-level verification depth.** Dimension 2 doesn't just check if files exist — it executes builds, runs CLI commands, and verifies output up to 4 levels deep:
 
-**Design introspection with research.** Before checking cross-pillar alignment, it evaluates the design itself: Is this a well-defined problem? Are there blind spots or stale assumptions? Is this the simplest sufficient solution? It actively searches the web to verify assumptions against the latest information.
+| Level | What it checks | Example |
+|-------|---------------|---------|
+| L1 Exists | Artifact was produced | File exists |
+| L2 Build | Follows conventions | `tsc` passes, lint clean |
+| L3 Integration | Business logic works | CLI commands produce expected output |
+| L4 E2E | Meets design intent end-to-end | Full user workflow verified |
+
+Minimum bar is L3 (Integration). "Tests pass" means it ran the tests. Knows how to verify different artifact types — code, configs, documentation, video, design files — each with appropriate methods.
+
+**Currency & assumptions check.** Before checking cross-pillar alignment, Self-Review evaluates the design itself and actively searches the web (with current-year queries) to verify assumptions haven't been invalidated. Findings are classified:
+
+- **Current** — no relevant new solution
+- **Emerging** — new solution exists but immature, noted but no action
+- **Problem Dissolved** — established solution exists, flags: "verify before continuing custom work"
+- **Assumption Invalidated** — a key design assumption no longer holds, flags with evidence
 
 **Principled judgment.** Every finding is evaluated against 6 explicit principles (3 theoretical + 3 engineering), embedded as check questions directly in each dimension. This makes audits consistent and reviewable.
 
-**Personalized quality standards.** Each project gets its own review rules. Self-Review discovers your project's instruction files (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`) and domain skills, then uses them as additional quality gates. When it finds recurring issues with no corresponding standard, it recommends exactly which file to add the standard to and drafts the content.
+**Cross-platform quality standards.** Self-Review discovers your project's instruction files across platforms — `CLAUDE.md`, `AGENTS.md`, `.cursorrules`, `.cursor/rules/`, `CONTRIBUTING.md` — and uses them as additional quality gates. It also discovers installed domain skills (e.g., a `video-editing` skill) and layers their rules on top.
 
-**Skill deposit detection.** Dimension 3 doesn't just check alignment — it evaluates whether lessons learned during execution are worth capturing as reusable skills. It applies specific deposit criteria (cross-project reusable? counter-intuitive trap? right granularity?) so you don't waste time formalizing patterns that aren't worth it.
+**Standard recommendations.** When Self-Review finds recurring issues with no corresponding standard, it doesn't just flag the problem — it drafts the standard text, specifies the exact file path where it should be persisted (platform-aware: `.claude/rules/` for CC, `.cursor/rules/` for Cursor, `AGENTS.override.md` for Codex), and explains why it's worth adding.
+
+**Implicit anchor inference.** No dedicated design docs? No progress.md? Self-Review infers from commit messages, PR descriptions, TODO comments, git log timelines, and code patterns before skipping any pillar. You don't need formal documents to get a meaningful audit.
+
+**Skill deposit detection.** Dimension 3 evaluates whether lessons learned during execution are worth capturing as reusable skills. It applies specific deposit criteria (cross-project reusable? counter-intuitive trap? right granularity?) and gives a clear recommendation: deposit / don't deposit / revisit when [condition].
 
 **Works for everything.** Not just code. Content projects, research, video production, documentation — anything with a design intent and deliverables.
 
@@ -130,8 +148,8 @@ ln -sfn ~/skills/self-review ~/.agents/skills/self-review
 
 ### Anchors Found
 - Design: README.md (design intent + principles)
-- Artifact: skill/SKILL.md, skill/references/dimensions.md
-- Skill: skill/ directory (self-review is itself a skill)
+- Artifact: SKILL.md, references/dimensions.md
+- Skill: self-review is itself a skill (SKILL.md + references/)
 - Progress: [inferred] git log on main
 
 ### Priority Dimensions
@@ -161,8 +179,8 @@ ln -sfn ~/skills/self-review ~/.agents/skills/self-review
 
 #### 6. Artifact <> Skill [Aligned]
 - Frontmatter follows Agent Skills standard (name, description)
-- Directory structure: skill/SKILL.md + skill/references/ per convention
-- No junk files in skill/
+- Directory structure: SKILL.md + references/ at repo root per convention
+- No junk files in skill content
 
 ### Summary
 - 6/6 aligned, 0/6 drifted, 0/6 broken
