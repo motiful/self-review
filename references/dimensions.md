@@ -1,5 +1,16 @@
 # Dimension Details
 
+## TOC
+
+- [Priority Dimensions (Progress-centric)](#priority-dimensions-progress-centric)
+  - [1. Progress <> Design](#1-progress--design)
+  - [2. Progress <> Artifact](#2-progress--artifact)
+  - [3. Progress <> Skill](#3-progress--skill)
+- [Deep Dimensions](#deep-dimensions)
+  - [4. Design <> Artifact](#4-design--artifact)
+  - [5. Design <> Skill](#5-design--skill)
+  - [6. Artifact <> Skill](#6-artifact--skill)
+
 Detailed checks for all 6 audit dimensions. Dimensions 1-3 are Progress-centric (highest priority). Dimensions 4-6 are cross-pillar deep checks. This is the complete C(4,2) combination of the 4 pillars.
 
 All dimensions are guided by the **Audit Principles** defined in SKILL.md. The 6 principles are embedded as check questions in the dimensions where they apply most — look for the `[principle]` tags.

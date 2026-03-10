@@ -87,6 +87,12 @@ Checks alignment between every pillar pair — the complete C(4,2) combination w
 
 **Works for everything.** Not just code. Content projects, research, video production, documentation — anything with a design intent and deliverables.
 
+## Usage
+
+Say: `/self-review`, `self-review`, `audit`, or `审视一下`
+
+The skill scans your project, discovers anchors in each pillar, locks the current scope from Progress, runs dimensional checks, and outputs a structured report with specific file paths and line numbers.
+
 ## Install
 
 ```bash
@@ -96,16 +102,14 @@ npx skills add motiful/self-review
 Or manually:
 
 ```bash
-git clone https://github.com/motiful/self-review
-# Then symlink skill/ to your agent's skills directory
-ln -sfn ~/self-review/skill ~/.claude/skills/self-review
+git clone https://github.com/motiful/self-review ~/skills/self-review
+
+# Claude Code
+ln -sfn ~/skills/self-review ~/.claude/skills/self-review
+
+# Other platforms (Cursor, Codex, Windsurf, etc.)
+ln -sfn ~/skills/self-review ~/.agents/skills/self-review
 ```
-
-## Usage
-
-Say: `/self-review`, `self-review`, `audit`, or `审视一下`
-
-The skill scans your project, discovers anchors in each pillar, locks the current scope from Progress, runs dimensional checks, and outputs a structured report with specific file paths and line numbers.
 
 ## Example Output
 
@@ -194,12 +198,15 @@ The skill scans your project, discovers anchors in each pillar, locks the curren
 ## What's Inside
 
 ```
-skill/
-├── SKILL.md              — Audit process, principles, and rules
-└── references/
-    └── dimensions.md     — Detailed checks for all 6 dimensions
+SKILL.md              — Audit process, principles, and rules
+references/
+└── dimensions.md     — Detailed checks for all 6 dimensions
 ```
 
 ## License
 
 [MIT](LICENSE)
+
+---
+
+Forged with [Skill Forge](https://github.com/motiful/skill-forge)

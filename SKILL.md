@@ -1,15 +1,15 @@
 ---
 name: self-review
 description: Run a 4-pillar, 6-dimension alignment audit on the current project. Use when the user says "self-review", "审视一下", or "audit". Report-only — never auto-fix.
+license: MIT
+metadata:
+  author: motiful
+  version: "2.0"
 ---
 
-# Self-Review — 4-Pillar Alignment Audit
+# Self-Review
 
-A structured audit that checks whether a project's design, artifacts, skills, and progress are in sync. Platform-agnostic, language-agnostic. Works for code, content, video, research — any project with deliverables.
-
-## Trigger
-
-User says: `/self-review`, `审视一下`, `audit`, or `self-review`
+Audit process: discover anchors in 4 pillars (Design, Artifact, Skill, Progress), lock scope from Progress, then check alignment across all 6 pillar-pair dimensions. Platform-agnostic, language-agnostic.
 
 ## Audit Principles
 
@@ -127,9 +127,9 @@ If any question reveals a concern, report it. These questions only apply to deci
 
 Report design introspection findings as a preamble before dimensional checks.
 
-### Step 1.5: Lock Scope
+### Step 2: Lock Scope
 
-**This step is mandatory.** Before running any dimension checks, establish the audit boundary from Progress:
+Before running any dimension checks, establish the audit boundary from Progress:
 
 1. **Read current phase** from Progress anchors. Identify what the project claims to be working on *right now*.
 
@@ -147,7 +147,7 @@ Report design introspection findings as a preamble before dimensional checks.
 
 Flag Phase 1 artifacts that depend on unbuilt Phase 2 — those are real defects. But "Phase 2 hasn't started yet" is never a finding.
 
-### Step 2: Run 6 Dimensions
+### Step 3: Run 6 Dimensions
 
 Each dimension checks drift between two pillars. This is the complete C(4,2) combination — no exceptions, no artificial extras.
 
@@ -163,7 +163,7 @@ Each dimension checks drift between two pillars. This is the complete C(4,2) com
 
 See `references/dimensions.md` for detailed checks per dimension.
 
-### Step 3: Report
+### Step 4: Report
 
 Output a structured report:
 
