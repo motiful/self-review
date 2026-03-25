@@ -1,15 +1,48 @@
 ---
 name: self-review
-description: Run a 4-pillar, 6-dimension alignment audit on the current project. Use when the user says "self-review", "审视一下", or "audit". Report-only — never auto-fix.
+description: "Run a 4-pillar, 6-dimension alignment audit on the current project. Checks design currency, executes artifact verification, detects skill deposits. Use when the user says \"self-review\", \"审视一下\", or \"audit\". Report-only — never auto-fix."
 license: MIT
 metadata:
   author: motiful
-  version: "2.0"
+  version: "3.0"
 ---
 
 # Self-Review
 
 Audit process: discover anchors in 4 pillars (Design, Artifact, Skill, Progress), lock scope from Progress, then check alignment across all 6 pillar-pair dimensions. Platform-agnostic, language-agnostic.
+
+```python
+def self_review(project_path):
+    # STEP 1: Discover Anchors
+    anchors = scan_anchors(project_path)               # see The 4 Pillars + Step 1 tables
+    standards = scan_standards(project_path)            # see Project-Specific Standards
+    domain_skills = scan_domain_skills(project_path)    # see Domain Skills
+    infer_missing(anchors)                              # see Implicit Anchor Inference
+
+    if anchors.design:
+        introspection = evaluate_design(anchors.design) # see Design Introspection
+        currency = check_currency(anchors.progress)     # see Currency & Assumptions Check
+
+    # STEP 2: Lock Scope
+    scope = lock_scope(anchors.progress)               # see Step 2: Lock Scope
+    assert scope.current_phase                         # GATE — cannot audit without knowing phase
+
+    # STEP 3: Run 6 Dimensions                         # references/dimensions.md
+    # Priority — always run
+    d1 = check_progress_design(anchors, scope, standards)
+    d2 = check_progress_artifact(anchors, scope, standards)
+    assert d2.verification_executed                    # GATE — must execute, not just report
+    assert d2.verification_level >= L3                 # GATE — L2-only insufficient
+    d3 = check_progress_skill(anchors, scope, standards)
+
+    # Cross-pillar — always run (skip ONLY when user explicitly says "quick" or "priority only")
+    d4 = check_design_artifact(anchors, scope, standards)
+    d5 = check_design_skill(anchors, scope, standards)
+    d6 = check_artifact_skill(anchors, scope, standards)
+
+    # STEP 4: Report
+    report(introspection, scope, [d1, d2, d3, d4, d5, d6])  # see Step 4: Report
+```
 
 ## Audit Principles
 
@@ -156,7 +189,7 @@ Each dimension checks drift between two pillars. This is the complete C(4,2) com
 2. **Progress <> Artifact** — Does claimed status match actual deliverables? **Must execute verification.**
 3. **Progress <> Skill** — Any lessons to capture? Existing skills need updating?
 
-**Deep audit — run in deep audits or when specifically relevant:**
+**Cross-pillar — always run (skip ONLY when user explicitly says "quick" or "priority only"):**
 4. **Design <> Artifact** — Does the output match the design?
 5. **Design <> Skill** — Do our methods support our design goals?
 6. **Artifact <> Skill** — Does the output follow established methods?

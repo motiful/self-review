@@ -1,3 +1,8 @@
+---
+name: dimensions
+description: Detailed check criteria for all 6 cross-pillar alignment dimensions. Covers Progress-centric priority dimensions (1-3) and cross-pillar dimensions (4-6), including verification depth levels, skill deposit criteria, and simplicity checks.
+---
+
 # Dimension Details
 
 ## TOC

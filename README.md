@@ -1,8 +1,16 @@
+<div align="center">
+
 # Self-Review
 
-> Structured reflection for any creative work — code, content, design, research.
+> Catch drift between design and delivery before it ships.
 
 [Agent Skills](https://agentskills.io) compatible — works with Claude Code, Cursor, Codex, OpenClaw, and any supporting platform.
+
+[![License: MIT][license-shield]][license-url]
+
+[Usage](#usage) · [Install](#install) · [Example Output](#example-output)
+
+</div>
 
 ## Who Is This For
 
@@ -16,6 +24,8 @@ Anyone producing work with intent.
 
 You don't need formal documents to use Self-Review. If your "design" is a mental model and your "progress" is a git log — that's enough. The 4 pillars are questions to ask, not documents to write.
 
+**Not for**: line-by-line code review, automated CI gates, or linting. Self-Review checks alignment between intent and delivery — it does not evaluate code style, syntax, or formatting.
+
 ## Why This Exists
 
 Anyone who ships work in stages faces the same problem: things drift.
@@ -27,49 +37,6 @@ Self-Review forces a structured pause. It scans your project across **4 pillars*
 It's especially powerful as an AI agent skill — agents are goal-seeking and don't naturally pause to reflect. But the framework works for any creator reviewing their own work.
 
 **Report-only** — it flags issues, never auto-fixes. You stay in control.
-
-## Why These Principles
-
-The 6 audit principles draw from two sources:
-
-**Feynman's criteria for good theories** (The Character of Physical Law, 1964):
-1. It must agree with experiment → **Verifiable & Verified**
-2. It must be self-consistent → **No Internal Contradiction**
-3. It must be the simplest explanation → **Simplest Sufficient Solution**
-
-**Engineering constraints** that theory alone doesn't cover:
-4. It must be buildable → **Feasible**
-5. It must handle edge cases → **Boundary-Complete**
-6. It must be handoff-ready → **Maintainable**
-
-The theoretical layer tells you "is this a good idea?". The engineering layer tells you "can this actually ship?". Self-Review checks both.
-
-## The 4 Pillars
-
-Pillars are lenses for examining the same body of work — not file categories.
-
-| Pillar | Core question | What it covers |
-|--------|--------------|----------------|
-| **Design** | Why are we doing this? What should it become? | Intent, decisions, constraints, specs |
-| **Artifact** | What was actually produced? | Any deliverable — code, documents, designs, videos, skills, configs |
-| **Skill** | How do we do things? What did we learn? | Reusable methods, standards, accumulated know-how |
-| **Progress** | Where are we? What's next? | Plans, status, milestones, tracking |
-
-The same deliverable can be examined through multiple pillars. A design doc is both Design (intent) and Artifact (deliverable). A pillar may have no dedicated files — intent might live only in commit messages, progress only in branch status.
-
-## The 6 Dimensions
-
-Checks alignment between every pillar pair — the complete C(4,2) combination with no exceptions.
-
-**Priority (always run):**
-1. **Progress <> Design** — Are we aligned with design intent?
-2. **Progress <> Artifact** — Does claimed status match actual deliverables?
-3. **Progress <> Skill** — Any lessons to capture?
-
-**Deep audit:**
-4. **Design <> Artifact** — Does the output match the design?
-5. **Design <> Skill** — Do our methods support our design goals?
-6. **Artifact <> Skill** — Does the output follow established methods?
 
 ## What Makes It Different
 
@@ -131,7 +98,8 @@ ln -sfn ~/skills/self-review ~/.agents/skills/self-review
 
 ## Example Output
 
-### Example: Self-Review Auditing Itself (Real Output)
+<details>
+<summary>Self-Review Auditing Itself (Real Output)</summary>
 
 ```
 ## Self-Review Report
@@ -186,7 +154,10 @@ ln -sfn ~/skills/self-review ~/.agents/skills/self-review
 - 6/6 aligned, 0/6 drifted, 0/6 broken
 ```
 
-### Example: Video Project (Hypothetical)
+</details>
+
+<details>
+<summary>Video Project (Hypothetical)</summary>
 
 ```
 ## Self-Review Report
@@ -213,6 +184,56 @@ ln -sfn ~/skills/self-review ~/.agents/skills/self-review
 - 5/6 aligned, 1/6 drifted, 0/6 broken
 ```
 
+</details>
+
+<details>
+<summary>The Framework: Principles, Pillars, and Dimensions</summary>
+
+### Why These Principles
+
+The 6 audit principles draw from two sources:
+
+**Feynman's criteria for good theories** (The Character of Physical Law, 1964):
+1. It must agree with experiment → **Verifiable & Verified**
+2. It must be self-consistent → **No Internal Contradiction**
+3. It must be the simplest explanation → **Simplest Sufficient Solution**
+
+**Engineering constraints** that theory alone doesn't cover:
+4. It must be buildable → **Feasible**
+5. It must handle edge cases → **Boundary-Complete**
+6. It must be handoff-ready → **Maintainable**
+
+The theoretical layer tells you "is this a good idea?". The engineering layer tells you "can this actually ship?". Self-Review checks both.
+
+### The 4 Pillars
+
+Pillars are lenses for examining the same body of work — not file categories.
+
+| Pillar | Core question | What it covers |
+|--------|--------------|----------------|
+| **Design** | Why are we doing this? What should it become? | Intent, decisions, constraints, specs |
+| **Artifact** | What was actually produced? | Any deliverable — code, documents, designs, videos, skills, configs |
+| **Skill** | How do we do things? What did we learn? | Reusable methods, standards, accumulated know-how |
+| **Progress** | Where are we? What's next? | Plans, status, milestones, tracking |
+
+The same deliverable can be examined through multiple pillars. A design doc is both Design (intent) and Artifact (deliverable). A pillar may have no dedicated files — intent might live only in commit messages, progress only in branch status.
+
+### The 6 Dimensions
+
+Checks alignment between every pillar pair — the complete C(4,2) combination with no exceptions.
+
+**Priority (always run):**
+1. **Progress <> Design** — Are we aligned with design intent?
+2. **Progress <> Artifact** — Does claimed status match actual deliverables?
+3. **Progress <> Skill** — Any lessons to capture?
+
+**Deep audit:**
+4. **Design <> Artifact** — Does the output match the design?
+5. **Design <> Skill** — Do our methods support our design goals?
+6. **Artifact <> Skill** — Does the output follow established methods?
+
+</details>
+
 ## What's Inside
 
 ```
@@ -221,10 +242,17 @@ references/
 └── dimensions.md     — Detailed checks for all 6 dimensions
 ```
 
+## Contributing
+
+Issues, suggestions, and PRs welcome at [github.com/motiful/self-review](https://github.com/motiful/self-review).
+
 ## License
 
 [MIT](LICENSE)
 
 ---
 
-Forged with [Skill Forge](https://github.com/motiful/skill-forge)
+Forged with [Skill Forge](https://github.com/motiful/skill-forge) · Crafted with [Readme Craft](https://github.com/motiful/readme-craft)
+
+[license-shield]: https://img.shields.io/github/license/motiful/self-review.svg
+[license-url]: https://github.com/motiful/self-review/blob/main/LICENSE
