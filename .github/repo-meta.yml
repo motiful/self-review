@@ -1,0 +1,22 @@
+description: >
+  Structured alignment audit for AI agents and creators. Checks drift
+  across 4 pillars and 6 dimensions — from design currency to artifact
+  verification. Report-only, never auto-fixes.
+topics:
+  # Tier 1: big traffic
+  - ai
+  - llm
+  - ai-agents
+  - developer-tools
+  # Tier 2: domain-specific
+  - agent-skills
+  - audit
+  - code-quality
+  - self-review
+  - quality-assurance
+  # Tier 3: ecosystem / platform
+  - claude-code
+  - codex
+  - cursor
+  - openclaw
+homepage: ""
