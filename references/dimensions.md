@@ -11,7 +11,7 @@ description: Detailed check criteria for all 6 cross-pillar alignment dimensions
   - [1. Progress <> Design](#1-progress--design)
   - [2. Progress <> Artifact](#2-progress--artifact)
   - [3. Progress <> Skill](#3-progress--skill)
-- [Deep Dimensions](#deep-dimensions)
+- [Cross-pillar Dimensions](#cross-pillar-dimensions)
   - [4. Design <> Artifact](#4-design--artifact)
   - [5. Design <> Skill](#5-design--skill)
   - [6. Artifact <> Skill](#6-artifact--skill)
@@ -167,7 +167,7 @@ For each candidate pattern flagged by this dimension:
 
 ---
 
-## Deep Dimensions
+## Cross-pillar Dimensions
 
 ### 4. Design <> Artifact
 

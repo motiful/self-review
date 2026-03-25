@@ -229,7 +229,7 @@ Output a structured report:
 #### 3. Progress <> Skill [Aligned / Drift / Broken]
 - [specific findings]
 
-### Deep Dimensions
+### Cross-pillar Dimensions
 
 #### 4. Design <> Artifact [Aligned / Drift / Broken]
 - [specific findings, scoped to current phase]
