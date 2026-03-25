@@ -3,6 +3,12 @@ name: dimensions
 description: Detailed check criteria for all 6 cross-pillar alignment dimensions. Covers Progress-centric priority dimensions (1-3) and cross-pillar dimensions (4-6), including verification depth levels, skill deposit criteria, and simplicity checks.
 ---
 
+# Dimension Details
+
+Detailed check criteria for all 6 cross-pillar alignment dimensions, including verification depth levels, skill deposit criteria, and simplicity checks.
+
+## Execution Procedure
+
 ```
 check_dimension(n, pillar_a, pillar_b, scope, standards) → finding{status, evidence[]}
 
@@ -25,8 +31,6 @@ for each claimed_deliverable in progress.done + progress.in_progress:
     report_quantitatively(result)                    # commands run, pass/fail, actual output
 if untestable: document_human_test_required(item)    # last resort after exhausting options
 ```
-
-# Dimension Details
 
 ## TOC
 

@@ -11,6 +11,8 @@ metadata:
 
 Audit process: discover anchors in 4 pillars (Design, Artifact, Skill, Progress), lock scope from Progress, then check alignment across all 6 pillar-pair dimensions. Platform-agnostic, language-agnostic.
 
+## Execution Procedure
+
 ```python
 def self_review(project_path):
     # STEP 1: Discover Anchors
