@@ -1,8 +1,8 @@
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="logo-light.svg">
-    <img alt="self-review" src="logo-light.svg" width="440">
+    <source media="(prefers-color-scheme: dark)" srcset=".github/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset=".github/logo-light.svg">
+    <img alt="self-review" src=".github/logo-light.svg" width="440">
   </picture>
 </div>
 
