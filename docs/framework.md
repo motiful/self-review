@@ -54,4 +54,13 @@ Dimension 2 verifies artifacts at 4 levels of depth:
 | **L3 Integration** | Business logic works correctly | Runtime execution, CLI commands produce expected output | Content reads correctly, config takes effect |
 | **L4 E2E** | Meets design intent end-to-end | Full user workflow verified | Complete user scenario validated |
 
-Minimum bar is L3 (Integration). L2-only is insufficient for any artifact with behavioral changes.
+Default minimum is L3 (Integration). L2-only is insufficient for any artifact with behavioral changes. However, minimum level varies by artifact type:
+
+| Artifact type | Minimum |
+|---|---|
+| Code (library, CLI, daemon, bug fix) | L3 |
+| Configuration, Infrastructure (CI/CD) | L3 |
+| Skill/documentation, Design document | L2 |
+| Article, Video, Visual design, Slides | L2 |
+
+L4 (E2E) is required when design or acceptance criteria explicitly state end-to-end behavior.

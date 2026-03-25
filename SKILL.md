@@ -32,10 +32,10 @@ def self_review(project_path):
     d1 = check_progress_design(anchors, scope, standards)
     d2 = check_progress_artifact(anchors, scope, standards)
     assert d2.verification_executed                    # GATE — must execute, not just report
-    assert d2.verification_level >= L3                 # GATE — L2-only insufficient
+    assert d2.verification_level >= min_level(artifact_type)  # GATE — see Verification Depth by Artifact Type in dimensions.md
     d3 = check_progress_skill(anchors, scope, standards)
 
-    # Cross-pillar — always run (skip ONLY when user explicitly says "quick" or "priority only")
+    # Cross-pillar — always run
     d4 = check_design_artifact(anchors, scope, standards)
     d5 = check_design_skill(anchors, scope, standards)
     d6 = check_artifact_skill(anchors, scope, standards)
@@ -189,7 +189,7 @@ Each dimension checks drift between two pillars. This is the complete C(4,2) com
 2. **Progress <> Artifact** — Does claimed status match actual deliverables? **Must execute verification.**
 3. **Progress <> Skill** — Any lessons to capture? Existing skills need updating?
 
-**Cross-pillar — always run (skip ONLY when user explicitly says "quick" or "priority only"):**
+**Cross-pillar — always run:**
 4. **Design <> Artifact** — Does the output match the design?
 5. **Design <> Skill** — Do our methods support our design goals?
 6. **Artifact <> Skill** — Does the output follow established methods?

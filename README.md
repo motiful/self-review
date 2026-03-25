@@ -68,8 +68,7 @@ It's especially powerful as an AI agent skill — agents are goal-seeking and do
 
 Say `/self-review`, `self-review`, `audit`, or `审视一下`.
 
-- **Full audit** (default) — discovers anchors in 4 pillars, locks scope, runs all 6 dimensions with L3+ artifact verification, outputs structured report with file paths and line numbers
-- **Priority only** — say "quick audit" or "priority only" to run dimensions 1-3 only (Progress-centric, skips cross-pillar)
+Self-Review discovers anchors in 4 pillars, locks scope, runs all 6 dimensions with artifact verification (minimum level depends on artifact type), and outputs a structured report with file paths and line numbers.
 
 ## Install
 

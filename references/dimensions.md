@@ -3,6 +3,29 @@ name: dimensions
 description: Detailed check criteria for all 6 cross-pillar alignment dimensions. Covers Progress-centric priority dimensions (1-3) and cross-pillar dimensions (4-6), including verification depth levels, skill deposit criteria, and simplicity checks.
 ---
 
+```
+check_dimension(n, pillar_a, pillar_b, scope, standards) → finding{status, evidence[]}
+
+for each check_row in dimension_table[n]:
+    evidence = execute_check(check_row, pillar_a, pillar_b, scope)
+    assert evidence.specific                        # file paths + line numbers, not vague claims
+for each principle_tag in dimension_table[n]:       # [T1], [T2], [E2], etc.
+    evidence = execute_principle_check(principle_tag, pillar_a, pillar_b)
+    assert evidence.specific
+
+# Dimension 2 additional protocol:
+check_progress_artifact(anchors, scope, standards) → finding
+
+for each claimed_deliverable in progress.done + progress.in_progress:
+    expectation = read_design_expectation(claimed_deliverable)
+    min_level = ARTIFACT_TYPE_MINIMUM[artifact_type]  # see Verification Depth by Artifact Type
+    result = execute_verification(claimed_deliverable, min_level)
+    assert result.executed                           # must run, not just report
+    assert result.level >= min_level                 # L3 for code, L2 for skills/docs, etc.
+    report_quantitatively(result)                    # commands run, pass/fail, actual output
+if untestable: document_human_test_required(item)    # last resort after exhausting options
+```
+
 # Dimension Details
 
 ## TOC
