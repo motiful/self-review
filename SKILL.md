@@ -11,6 +11,20 @@ metadata:
 
 Audit process: discover anchors in 4 pillars (Design, Artifact, Skill, Progress), lock scope from Progress, then check alignment across all 6 pillar-pair dimensions. Platform-agnostic, language-agnostic.
 
+## Rules
+
+- **Report only, never auto-fix** — flag issues, do not modify files. Exception: Dimension 2 MUST execute verification (build, run, CLI) — read-only execution.
+- **Scope first** — lock scope from Progress before any dimension. Never flag deferred/out-of-scope items.
+- **Progress first** — start from "what are we doing now?" and radiate outward.
+- **Scan by content, not by file type** — a commit message can carry Design intent, a code comment can carry Progress status. Never skip content because "it's not in the right file type for this pillar."
+- **Infer before skipping** — when a pillar has no explicit files, check implicit sources before declaring it empty.
+- **Built-in principles + user standards** — the 6 principles are the baseline; project rules and domain skills add to it, never replace it.
+- **Be specific** — cite file paths and line numbers.
+- **No false positives** — only flag real drift. "Not yet built" is not drift if deferred.
+- **Skill deposits need criteria** — evaluate against deposit criteria in dimensions.md (Dimension 3).
+- **Always add current year to search queries** — for Currency and Assumptions checks.
+- **Platform-agnostic, language-agnostic.**
+
 ## Execution Procedure
 
 ```python
@@ -262,16 +276,3 @@ If the audit finds recurring quality issues with no corresponding standard, incl
 
 Default to platform-native files (lower friction). Suggest rule-skills when the standard could benefit other projects. Always present both options — the user decides.
 
-## Rules
-
-- **Report only, never auto-fix** — flag issues, do not modify files. Exception: Dimension 2 MUST execute verification (build, run, CLI) — read-only execution.
-- **Scope first** — lock scope from Progress before any dimension. Never flag deferred/out-of-scope items.
-- **Progress first** — start from "what are we doing now?" and radiate outward.
-- **Scan by content, not by file type** — a commit message can carry Design intent, a code comment can carry Progress status. Never skip content because "it's not in the right file type for this pillar."
-- **Infer before skipping** — when a pillar has no explicit files, check implicit sources before declaring it empty.
-- **Built-in principles + user standards** — the 6 principles are the baseline; project rules and domain skills add to it, never replace it.
-- **Be specific** — cite file paths and line numbers.
-- **No false positives** — only flag real drift. "Not yet built" is not drift if deferred.
-- **Skill deposits need criteria** — evaluate against deposit criteria in dimensions.md (Dimension 3).
-- **Always add current year to search queries** — for Currency and Assumptions checks.
-- **Platform-agnostic, language-agnostic.**

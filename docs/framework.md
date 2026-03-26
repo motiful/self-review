@@ -45,22 +45,6 @@ Checks alignment between every pillar pair — the complete C(4,2) combination w
 
 ## Verification Depth
 
-Dimension 2 verifies artifacts at 4 levels of depth:
+Dimension 2 verifies artifacts at 4 levels of depth — L1 (Exists), L2 (Build), L3 (Integration), L4 (E2E). Default minimum is L3 for code and configuration, L2 for documentation and content. L4 when acceptance criteria explicitly require end-to-end verification.
 
-| Level | What it checks | Code example | Non-code example |
-|-------|---------------|-------------|-----------------|
-| **L1 Exists** | Artifact was produced | File exists | Video/article generated |
-| **L2 Build** | Follows conventions and standards | `tsc` passes, lint clean | Format correct, axes labeled |
-| **L3 Integration** | Business logic works correctly | Runtime execution, CLI commands produce expected output | Content reads correctly, config takes effect |
-| **L4 E2E** | Meets design intent end-to-end | Full user workflow verified | Complete user scenario validated |
-
-Default minimum is L3 (Integration). L2-only is insufficient for any artifact with behavioral changes. However, minimum level varies by artifact type:
-
-| Artifact type | Minimum |
-|---|---|
-| Code (library, CLI, daemon, bug fix) | L3 |
-| Configuration, Infrastructure (CI/CD) | L3 |
-| Skill/documentation, Design document | L2 |
-| Article, Video, Visual design, Slides | L2 |
-
-L4 (E2E) is required when design or acceptance criteria explicitly state end-to-end behavior.
+For the complete verification depth table with per-artifact-type minimums, see `references/dimensions.md` § Verification Depth by Artifact Type.

@@ -48,9 +48,11 @@ It's especially powerful as an AI agent skill — agents are goal-seeking and do
 
 **Scope-aware auditing.** Self-Review reads your Progress to lock the current phase before checking anything. Items are classified as in-scope, deferred, or out-of-scope — only in-scope work gets audited. "Phase 2 hasn't started yet" is never a finding.
 
-**Artifact verification, not just existence checks.** Dimension 2 runs your builds, executes CLI commands, and verifies output — minimum bar is Integration (L3). "Tests pass" means it actually ran the tests.
+**Artifact verification, not just existence checks.** The artifact check runs your builds, executes CLI commands, and verifies output — not just that files exist, but that they actually work. "Tests pass" means it ran the tests.
 
-**Currency and assumptions check.** Self-Review searches the web with current-year queries to verify your design assumptions still hold. Flags when a key assumption has been invalidated or when a community solution has dissolved the problem you're solving custom.
+**Design introspection.** Evaluates your design for clarity, value, scope, and simplicity before checking alignment. Asks whether the goal is well-defined, the scope is right-sized, and whether a simpler approach exists.
+
+**Currency and assumptions check.** Searches the web with current-year queries to verify your design assumptions still hold. Flags when a key assumption has been invalidated or when a community solution has dissolved the problem you're solving custom.
 
 **Principled judgment.** Every finding is evaluated against 6 explicit principles (3 theoretical + 3 engineering), embedded as check questions directly in each dimension. Audits are consistent and reviewable.
 
