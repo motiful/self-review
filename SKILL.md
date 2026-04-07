@@ -116,11 +116,23 @@ If found, these standards become additional checks in cross-pillar dimensions. F
 
 #### Domain Skills
 
-Scan `.claude/skills/` (or platform equivalent) for skills whose description matches the current project's domain. If found, treat the standards and rules defined in those skills as additional check criteria — layer them on top of the built-in principles when running dimensions.
+Scan `.claude/skills/` (or platform equivalent) for two types of skills:
+
+**Domain skills** — skills whose description matches the current project's domain. Treat the standards and rules defined in those skills as additional check criteria — layer them on top of the built-in principles when running dimensions. Only include domain skills that are clearly relevant. Do not force-apply unrelated skills.
 
 Example: A `video-editing` skill defines "jump cuts must not exceed 3 frames" → Dimension 4 and 6 check this rule against the artifact.
 
-Only include skills that are clearly relevant to the project. Do not force-apply unrelated skills.
+**Rule-skills** — skills whose primary value is enforceable MUST/NEVER constraints (not workflows). These follow the rules-as-skills pattern. In-repo rule-skills are **always relevant** to the project they live in, regardless of domain match. Extract each MUST/NEVER constraint and elevate it to an audit standard with the same authority as `CLAUDE.md` rules.
+
+Detection signals:
+- Description or body contains MUST/NEVER/ALWAYS constraint patterns
+- Has a Constraints section with enumerated rules
+- Name contains "rules", "constraints", or "standards"
+- Follows rules-as-skills three-layer format (trigger → constraints → verification)
+
+Example: A `maintenance-rules` skill defines "MUST NOT push SKILL.md body over 500 lines" → Dimension 2 verifies line count, Dimension 6 checks compliance.
+
+Report detected rule-skills and their extracted constraints in the Anchors section under Skill.
 
 #### Implicit Anchor Inference
 

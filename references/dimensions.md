@@ -257,6 +257,7 @@ Does the output follow established methods?
 | Skill accuracy | Compare skill descriptions vs actual artifact capabilities | Skill claims feature X, artifact doesn't have it |
 | Behavioral rules | Check if skill rules are actually enforced | Rule says "never do X", but artifact does X |
 | Quality gates | Verify documented quality checks were actually applied | Checklist exists but wasn't followed |
+| Rule-skill enforcement | For each in-repo rule-skill, extract MUST/NEVER constraints and verify the artifact satisfies each one | Rule-skill says "MUST keep SKILL.md under 500 lines", SKILL.md is 600 lines |
 | Artifact-as-skill check | If artifact IS a skill, does it follow skill conventions? | Built a SKILL.md that doesn't match the skill template |
 | Template sync | Duplicated docs (e.g., check.md in two locations) are in sync | Source of truth updated, copy stale |
 | `[E3 Maintainable]` | Can someone new understand and modify this artifact by following the documented skills? | Skill says "use pattern X", artifact uses undocumented pattern Y — handoff breaks |
